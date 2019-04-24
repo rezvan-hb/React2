@@ -1,0 +1,9 @@
+git status
+git clone https://github.com/rezvan-hb/React2.git
+cd React2
+git status
+git add .
+git commit -m "create React-app"
+git config user.email "rezvanhabibollahi1995@gmail.com"
+git config user.name "rezvan-hb"
+git push
