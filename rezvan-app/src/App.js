@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { BrowserRouter as Router, Route } from "react-router-dom"
+import Login from './Component/Login'
+import Messenger from './Component/Messenger'
+import Signup from './Component/Signup'
 
-function App() {
+import logger from 'redux-logger'
+import { Provider } from 'react-redux'
+import { createStore, applyMiddleware } from 'redux'
+import conversation from './reducer/appReducer'
+
+const store = createStore(conversation, applyMiddleware(logger))
+
+function App () {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React.app
-        </a>
-      </header>
-    </div>
-  );
+    <Provider store={store}>
+      <Router>
+        <Route path='/' exact component={Login} />
+        <Route path='/signup' component={Signup} />
+        <Route path='/messenger' component={Messenger} />
+      </Router>
+    </Provider>
+  )
 }
-
-export default App;
+export default App
