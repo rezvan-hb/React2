@@ -6,8 +6,4 @@ const mapDispatchToProps = (dispatch) => ({
   dispatch: dispatch
 })
 
-const mapStateToProps =  (state) => ({
-  conversationList: state.conversationList
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Conversation)
+export default connect(mapDispatchToProps)(Conversation)

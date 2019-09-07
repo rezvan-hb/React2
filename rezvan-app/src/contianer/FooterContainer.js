@@ -6,8 +6,12 @@ const mapDispatchToProps = (dispatch) => ({
   dispatch: dispatch
 })
 
+const mapStateToProps = (state) => ({
+  conversation_id : state.conversation_id
+})
+
 const FooterContainer = connect(
-  mapDispatchToProps
+  mapStateToProps, mapDispatchToProps
 )(Footer)
 
 export default FooterContainer

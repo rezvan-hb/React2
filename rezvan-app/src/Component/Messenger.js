@@ -1,13 +1,13 @@
 import React from 'react'
 import '../App.css'
-import ConversationContainer from '../contianer/ConversationContainer'
+import ConversationListContainer from '../contianer/ConversationListContainer'
 import Chat from './Chat'
 
 class Messenger extends React.Component {
   render () {
     return (
       <div className='Messenger'>
-          <ConversationContainer />
+          <ConversationListContainer />
           <Chat />
       </div>
     )

@@ -146,6 +146,13 @@ margin: 3px;
 
 }
 
+.searchinput {
+  margin: 2px;
+  border: 1px solid gray;
+  border-radius:20px ;
+  height: 3.5vh;
+  width: 20vw;
+}
 .unseenmessage{
   border: 1px solid rgb(10, 126, 172);
   border-radius: 100%;

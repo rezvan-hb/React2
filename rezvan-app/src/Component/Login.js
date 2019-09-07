@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import telegramicon from './iconfinder_telegramm_2691273.png'
 import validate from '../validiation/validateFunction.js'
 import axios from 'axios'
+import { withRouter } from 'react-router'
 
 class Login extends React.Component {
   constructor (props) {
@@ -29,39 +30,50 @@ class Login extends React.Component {
   }
   
   handleRequest () {
-    var emailError = validate('email', this.state.email)
-    var passwordError = validate('password', this.state.password)
-
-    // var error = {}
-    // error.email = emailError
-    // error.password = passwordError
-    // this.setState({error: error}) === this.setState({error})
+    // var emailError = validate('email', this.state.email)
+    // var passwordError = validate('password', this.state.password)
+    // this.setState({...this.state, error: {...this.state.error, email:emailError, password: passwordError}})
     
-    this.setState({...this.state, error: {...this.state.error, email:emailError, password: passwordError}})
+    let error = {
+      email : validate('email', this.state.email),
+      password : validate('password', this.state.password)
+    }
+    let valid = true
 
-.    axios.post('https://api.paywith.click/auth/signin/', {
-      email: this.state.email,
-      password: this.state.password
-      })
-      .then(function (response) {
-        console.log('response::::::',response);
-        window.localStorage.setItem('token', response.data.data.token)
-        window.localStorage.setItem('id', response.data.data.profile.id)
-      })
-      .catch(function (error) {
-        console.log('error:',error);
-      })
-      window.localStorage.getItem('token')
-      this.setState({ clicked: !this.state.clicked })
-      if (this.state.clicked === true) {
-      this.setState({ clicked: false })
-      } else {
-      this.setState({ clicked: true })
+    this.setState({ error },
+      () => {
+        Object.values(this.state.error).map((item) => {
+          if (item !== null) {
+            valid = false
+          }
+        })
+        if (valid) {
+          axios.post('https://api.paywith.click/auth/signin/', {
+            email: this.state.email,
+            password: this.state.password
+            })
+            .then((response) => {
+                window.localStorage.setItem('token', response.data.data.token)
+                window.localStorage.setItem('id', response.data.data.profile.id)
+                this.props.history.push('/messenger')
+            })
+            .catch(function (error) {
+              console.log('error:',error);
+            })
+            window.localStorage.getItem('token')
+            this.setState({ clicked: !this.state.clicked })
+            if (this.state.clicked === true) {
+            this.setState({ clicked: false })
+            } else {
+            this.setState({ clicked: true })
+            }
+        }
       }
+    )
   }
 
   render () {
-    console.log(this.state)
+    console.log(this.props)
     return (
       <div className='Login'>
         <div className='Container'>
@@ -74,7 +86,7 @@ class Login extends React.Component {
           {this.state.error.password !== null &&
             <p className='error'>{this.state.error.password}</p>
           }
-          <button className='Login1' onClick={() => this.handleRequest( )} > Login </button>
+          <button className='Login1' onClick = {() => this.handleRequest()} > Login </button>
 
            <div className='link'>
              <Link className='signupp' to='./signup'> Create new account.</Link>
@@ -85,4 +97,4 @@ class Login extends React.Component {
     )
   }
 }
-export default Login 
+export default withRouter(Login)

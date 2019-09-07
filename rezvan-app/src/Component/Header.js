@@ -1,22 +1,21 @@
 
 import React from 'react'
 import '../App.css'
-import imageprofile from './iconfinder_telegramm_2691273.png' 
 import search from './search.png'
 import call from './call.png'
 import more from './more.png'
 
 class Header extends React.Component {
     render () {
-        console.log('userName:', this.props)
+        console.log('email:', this.props.email)
         return (
             <div className = 'header'>
                 <div className = 'd1'>
-                    <img src={imageprofile} />
+                    <img src={this.props.url_profile} />
                 </div>
                 
                 <div className = 'd2'>
-                    <span>{this.props.userName}</span>
+                    <span>{this.props.email}</span>
                     <span>last seen resently!</span>
                 </div>
                 

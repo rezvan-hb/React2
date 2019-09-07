@@ -3,6 +3,7 @@ import React from 'react'
 import '../App.css'
 import validate from '../validiation/validateFunction.js'
 import axios from 'axios'
+import { withRouter } from 'react-router'
 
 class Signup extends React.Component {
   constructor (props) {
@@ -28,32 +29,37 @@ class Signup extends React.Component {
   }
 
   handleClick() {
-    var emailError = validate('email', this.state.email)
-    var passwordError = validate('password', this.state.password)
-    var conpasswordError = validate('confirmPassword', this.state.ReEnterPassword)
-    
-    var error={}
-    error.email = emailError
-    error.password = passwordError
-    error.conpass = conpasswordError
-    this.setState({error:error})
-    if(this.state.password === this.state.ReEnterPassword){
-      axios.post('https://api.paywith.click/auth/signup/', {
-        email: this.state.email,
-        password: this.state.password,
-        ReEnterPassword:this.state.ReEnterPassword
-      })
-        .then(function (response) {
-          console.log('response::::::',response);
-          // window.localStorage.setItem('token', response.data.data.token)
-          // window.localStorage.setItem('id', response.data.data.profile.id)
-        })
-        .catch(function (error) {
-          console.log('error::::::',error);
-        })
-    } else {
-      this.setState({error:'invalid password!'})
+    var valid = true
+    var error = {
+      email: validate('email', this.state.email),
+      password : validate('password', this.state.password),
+      ReEnterPassword : validate('confirmPassword', this.state.ReEnterPassword)
     }
+
+    this.setState({error}, () => { 
+      Object.values(this.state.error).map((item) => {
+        if (item !== null) {
+          valid = false
+        }
+      if(valid) {
+        if(this.state.password === this.state.ReEnterPassword) {
+          axios.post('https://api.paywith.click/auth/signup/', {
+            email: this.state.email,
+            password: this.state.password,
+          })
+            .then( (response) => {
+              console.log('response::::::',response);
+              this.props.history.push('/messenger')
+            })
+            .catch(function (error) {
+              console.log('error::::::',error);
+            })
+        } else {
+          this.setState({error:'invalid password!'})
+        }
+      }
+      })
+    })
   }
 
   render () {
@@ -131,4 +137,4 @@ class SelectDay extends React.Component {
     )
   }
 }
-export default Signup
+export default withRouter(Signup)

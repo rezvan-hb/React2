@@ -1,7 +1,8 @@
 
-export const getUserName = (userName) => ({
+export const getUserName = (url_profile,email) => ({
   type: 'SAVE_SELECTED_USER_NAME',
-  payload: userName
+  url_profile :url_profile ,
+  email :email
 })
  
 export const sendNewMessage = (newMessage) => ({
@@ -9,7 +10,19 @@ export const sendNewMessage = (newMessage) => ({
    payload: newMessage
 })
 
-export const createNewConversation = (newConversation) => ({
-   type: 'CREATE_NEW_CONVERSATION',
-   payload: newConversation
+export const getConversationlist = (conversationlist) => ({
+   type: 'GET_CONVERSATION_LIST',
+   payload: conversationlist
+})
+
+
+export const get_message_list = (messagelist) => ({
+   type : 'GET_MESSAGE_LIST',
+   payload : messagelist
+})
+
+export const get_conversation_id = (conversation_id) => ({
+   type: 'GET_CONVERSATION_ID',
+   payload: conversation_id 
+
 })
